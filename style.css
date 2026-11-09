@@ -1,0 +1,322 @@
+/* ==========================================================================
+   Stijlbestand voor De Noordpool (Three.js Scene)
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #060d1a;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #f0f6ff;
+}
+
+#canvas-container {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ==========================================================================
+   Bovenste HUD-balk
+   ========================================================================== */
+
+#hud-header {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.brand-badge {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(10, 22, 44, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(160, 210, 255, 0.22);
+  border-radius: 14px;
+  padding: 10px 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+}
+
+.compass-icon {
+  font-size: 1.7rem;
+  filter: drop-shadow(0 0 8px rgba(100, 220, 255, 0.5));
+}
+
+.brand-badge h1 {
+  font-size: 1.08rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.coords {
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+}
+
+.brand-badge p {
+  font-size: 0.78rem;
+  color: #a8c7e8;
+  margin-top: 2px;
+}
+
+.hud-stats {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stat-pill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(10, 22, 44, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(160, 210, 255, 0.22);
+  padding: 8px 13px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: #e2f1ff;
+}
+
+.stat-pill .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 8px #34d399;
+}
+
+.hud-btn {
+  background: rgba(15, 32, 62, 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(160, 210, 255, 0.25);
+  color: #e8f4ff;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.hud-btn:hover {
+  background: rgba(30, 58, 108, 0.9);
+  border-color: rgba(160, 220, 255, 0.55);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   Zijpaneel met Uitleg & Camera-knoppen
+   ========================================================================== */
+
+#info-panel {
+  position: fixed;
+  top: 84px;
+  right: 16px;
+  width: 310px;
+  max-height: calc(100vh - 104px);
+  overflow-y: auto;
+  z-index: 10;
+  background: rgba(10, 22, 44, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(160, 210, 255, 0.22);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+#info-panel.collapsed {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(20px);
+}
+
+.panel-section + .panel-section {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(160, 210, 255, 0.14);
+}
+
+.panel-section h2 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #7dd3fc;
+  margin-bottom: 10px;
+}
+
+.camera-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.cam-btn {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(160, 210, 255, 0.18);
+  color: #dbeafe;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.cam-btn:hover {
+  background: rgba(125, 211, 252, 0.18);
+  border-color: rgba(125, 211, 252, 0.45);
+}
+
+.cam-btn.active {
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  border-color: #38bdf8;
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+}
+
+.interactive-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.78rem;
+  line-height: 1.38;
+}
+
+.interactive-list li {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  padding: 7px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.interactive-list strong {
+  display: block;
+  color: #f8fafc;
+  margin-bottom: 2px;
+}
+
+.interactive-list span {
+  color: #b6d0eb;
+}
+
+.controls-hint {
+  font-size: 0.75rem;
+  color: #9cc0e6;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.controls-hint strong {
+  color: #e0f2fe;
+}
+
+/* ==========================================================================
+   Hover Tooltip & Klik-Toast
+   ========================================================================== */
+
+#hover-tooltip {
+  position: fixed;
+  z-index: 20;
+  pointer-events: none;
+  background: rgba(8, 20, 42, 0.9);
+  border: 1px solid rgba(125, 211, 252, 0.55);
+  color: #ffffff;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.55), 0 0 12px rgba(56, 189, 248, 0.25);
+  transform: translate(-50%, -135%);
+  white-space: nowrap;
+  transition: opacity 0.12s ease;
+}
+
+#hover-tooltip.hidden {
+  opacity: 0;
+}
+
+#action-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  pointer-events: none;
+  background: rgba(12, 28, 56, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(250, 204, 21, 0.55);
+  color: #fef9c3;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+#action-toast.hidden {
+  opacity: 0;
+  transform: translate(-50%, 12px);
+}
+
+@media (max-width: 768px) {
+  #info-panel {
+    width: 260px;
+    top: auto;
+    bottom: 16px;
+    right: 16px;
+    max-height: 45vh;
+  }
+}

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>De Noordpool (90° N) — Interactieve Three.js Scene</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Importmap voor Three.js en OrbitControls (werkt zowel lokaal als via een server) -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <!-- 3D Canvas Container -->
+  <div id="canvas-container"></div>
+
+  <!-- Hover Tooltip bij klikbare 3D-objecten -->
+  <div id="hover-tooltip" class="hidden">
+    <span class="tooltip-icon">✨</span>
+    <span id="tooltip-text">Klik voor interactie</span>
+  </div>
+
+  <!-- Bovenste HUD-balk: Titel & FPS-meter -->
+  <header id="hud-header">
+    <div class="brand-badge">
+      <span class="compass-icon">🧭</span>
+      <div>
+        <h1>De Noordpool <span class="coords">90°00′00″ N</span></h1>
+        <p>Gebruik de muis om rond te kijken • Klik op objecten in de scene</p>
+      </div>
+    </div>
+
+    <div class="hud-stats">
+      <div class="stat-pill" title="Frames per seconde">
+        <span class="dot"></span>
+        <span id="fps-counter">60 FPS</span>
+      </div>
+      <button id="toggle-sound-btn" class="hud-btn" title="Geluidseffecten aan/uit">
+        🔊 Geluid: Aan
+      </button>
+      <button id="toggle-ui-btn" class="hud-btn" title="Verberg/toon paneel">
+        ℹ️ Bediening
+      </button>
+    </div>
+  </header>
+
+  <!-- Zijpaneel met informatie, camerastandpunten en klikbare objecten -->
+  <aside id="info-panel">
+    <section class="panel-section">
+      <h2>🎥 Camera Standpunten</h2>
+      <div class="camera-buttons">
+        <button class="cam-btn active" data-view="overview">Overzicht</button>
+        <button class="cam-btn" data-view="pole">Noordpool (90°)</button>
+        <button class="cam-btn" data-view="workshop">Werkplaats</button>
+        <button class="cam-btn" data-view="sleigh">Volg Arrenslee</button>
+      </div>
+    </section>
+
+    <section class="panel-section">
+      <h2>🖱️ Klikbare Objecten</h2>
+      <ul class="interactive-list">
+        <li>
+          <strong>💈 Noordpoolpaal (90° N):</strong>
+          <span>Laat de wereldbol draaien, schiet sterrenvuurwerk af en versterk het noorderlicht.</span>
+        </li>
+        <li>
+          <strong>🏠 Werkplaats van de Kerstman:</strong>
+          <span>Open/sluit de deur, activeer werkplaats-modus en extra rookpluimen.</span>
+        </li>
+        <li>
+          <strong>🎄 Kerstbomen (8×):</strong>
+          <span>Wissel het knipperpatroon van de kerstlichtjes en schud sneeuw van de takken.</span>
+        </li>
+        <li>
+          <strong>🚂 Noordpool Express Trein:</strong>
+          <span>Geef het treintje een tijdelijke turboboost met stoomfluit.</span>
+        </li>
+        <li>
+          <strong>⛄ Sneeuwpop Olaf:</strong>
+          <span>Laat de sneeuwpop vrolijk springen en zijn hoed optillen.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="panel-section controls-hint">
+      <div><strong>Linker muisknop:</strong> Rondkijken / Draaien</div>
+      <div><strong>Rechter muisknop:</strong> Verschuiven (Pan)</div>
+      <div><strong>Scrollwiel:</strong> In- en uitzoomen</div>
+    </section>
+  </aside>
+
+  <!-- Melding-toast onderin wanneer er op een object geklikt wordt -->
+  <div id="action-toast" class="hidden"></div>
+
+  <!-- Hoofdscript met de Three.js scene-opbouw -->
+  <script src="main.js"></script>
+
+  <!-- Module-loader die Three.js en OrbitControls inlaadt en main.js start -->
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+    window.THREE = THREE;
+    window.OrbitControls = OrbitControls;
+
+    if (typeof window.initNoordpoolScene === 'function') {
+      window.initNoordpoolScene();
+    }
+  </script>
+</body>
+</html>
